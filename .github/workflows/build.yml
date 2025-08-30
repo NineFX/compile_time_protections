@@ -19,6 +19,8 @@ jobs:
           components: rustfmt
       - name: Rustfmt Check
         uses: actions-rust-lang/rustfmt@v1
+        with:
+          manifest-path: toy_service/Cargo.toml
   build:
     runs-on: ubuntu-latest
     steps:
