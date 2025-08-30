@@ -1,0 +1,11 @@
+[Unit]
+Description=Toy
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/local/bin/toy_service
+Restart=always
+RestartSec=15s
+
+[Install]
+WantedBy=multi-user.target
