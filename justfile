@@ -49,7 +49,7 @@ build-rust-release:
     cargo build --release
 
 [working-directory: 'toy_service']
-build-rust-release-rpi: 
+build-rust-release-rpi:
     cargo build --release --target {{rust_rpi_target}}
 
 [working-directory: 'toy_service']
@@ -93,6 +93,6 @@ bootstrap:
     cargo install cargo-deb
     rustup target add {{rust_rpi_target}}
 
-ci-build: bootstrap package-rpi
+ci-build: bootstrap build-cpp-release-rpi build-rust-release-rpi
 
 ci-release: ci-build apt-repo
