@@ -83,14 +83,14 @@ apt-repo:
 
 # Install prerequisites on a Debian Linux distro
 bootstrap:
-    sudo apt-get update
-    sudo apt-get install -y clang-16 clang-tools-16 gdb valgrind curl wget \
-                            gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
-                            libc6-dev-armhf-cross libc6-armhf-cross \
-                            libstdc++6-armhf-cross libgcc-s1-armhf-cross \
-                            libc++1-16 libc++abi1-16 libclang-rt-16-dev libstdc++6 \
-                            checksec aptly
-    cargo install cargo-deb
+    apt-get update
+    apt-get install -y clang-16 clang-tools-16 gdb valgrind curl wget \
+                       gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
+                       libc6-dev-armhf-cross libc6-armhf-cross \
+                       libstdc++6-armhf-cross libgcc-s1-armhf-cross \
+                       libc++1-16 libc++abi1-16 libclang-rt-16-dev libstdc++6 \
+                       checksec aptly
+cargo install cargo-deb
     rustup target add {{rust_rpi_target}}
 
 ci-build: bootstrap package-rpi
