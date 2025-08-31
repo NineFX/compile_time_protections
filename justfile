@@ -67,7 +67,7 @@ install_package: package
 [working-directory: 'toy_service']
 package-rpi: build-cpp-release-rpi
     @echo 'Generating a cross-compiled Debian package for Raspberry Pi'
-    CARGO_DEB_DPKG_SHLIBDEPS=false cargo deb --target {{rust_rpi_target}}
+    CARGO_DEB_DPKG_SHLIBDEPS=false cargo deb --strip --deb-version {{version}} --target {{rust_rpi_target}}
 
 clean: clean-rust
 
