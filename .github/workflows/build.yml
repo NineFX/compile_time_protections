@@ -1,4 +1,4 @@
-name: Clang Build
+name: Build
 
 on:
   push:
@@ -31,4 +31,4 @@ jobs:
         with:
           just-version: 1.42.4
       - name: Run Just
-        run: just ci
+        run: just ci-build
