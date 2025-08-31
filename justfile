@@ -76,7 +76,7 @@ clean-rust:
     cargo clean
 
 apt-repo:
-    aptly repo create -config=.aptly.conf -distribution=stable -component=main compile_time_protections
+    aptly repo create -config=.aptly.conf -distribution=bullseye -component=main compile_time_protections
     aptly repo add -config=.aptly.conf compile_time_protections toy_service/target/debian/*.deb
     aptly publish repo -config=.aptly.conf --skip-signing compile_time_protections
 
