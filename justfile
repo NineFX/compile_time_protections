@@ -90,7 +90,7 @@ bootstrap:
                        libstdc++6-armhf-cross libgcc-s1-armhf-cross \
                        libc++1-16 libc++abi1-16 libclang-rt-16-dev libstdc++6 \
                        checksec aptly
-cargo install cargo-deb
+    cargo install cargo-deb
     rustup target add {{rust_rpi_target}}
 
 ci-build: bootstrap package-rpi
