@@ -4,7 +4,7 @@ cpp := "clang++-16"
 cpp_flags := "-D_FORTIFY_SOURCE=3"
 cpp_source := "toy_service.cpp"
 executable := "vulnerable_binary"
-version := `git describe --exact-match --tags 2>/dev/null || echo "0.0.0-dev"`
+version := `echo "${GITHUB_REF_NAME}" || echo "0.0.0-dev"`
 
 default:
   @just --list
@@ -83,20 +83,16 @@ apt-repo:
 
 # Install prerequisites on a Debian Linux distro
 bootstrap:
-    sudo apt-get update
-    sudo apt-get install -y clang-16 clang-tools-16 gdb valgrind curl wget \
+    apt-get update
+    apt-get install -y clang-16 clang-tools-16 gdb valgrind curl wget \
                        gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
                        libc6-dev-armhf-cross libc6-armhf-cross \
                        libstdc++6-armhf-cross libgcc-s1-armhf-cross \
                        libc++1-16 libc++abi1-16 libclang-rt-16-dev libstdc++6 \
                        checksec aptly
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     cargo install cargo-deb
     rustup target add {{rust_rpi_target}}
 
 ci-build: bootstrap package-rpi
 
-ci-release: ci-build apt-repo show-current-tag
-
-show-current-tag:
-    git describe --tags --abbrev=0
+ci-release: ci-build apt-repo
