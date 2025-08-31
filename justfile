@@ -95,4 +95,4 @@ bootstrap:
 
 ci-build: bootstrap package-rpi
 
-ci-release: ci-build ci-release
+ci-release: ci-build apt-repo
