@@ -23,7 +23,7 @@ jobs:
           manifest-path: toy_service/Cargo.toml
   build:
     runs-on: ubuntu-latest
-    container: debian:bullseye
+    container: mcr.microsoft.com/devcontainers/rust:1-1-bullseye
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

@@ -90,6 +90,7 @@ bootstrap:
                        libstdc++6-armhf-cross libgcc-s1-armhf-cross \
                        libc++1-16 libc++abi1-16 libclang-rt-16-dev libstdc++6 \
                        checksec aptly
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     cargo install cargo-deb
     rustup target add {{rust_rpi_target}}
 
