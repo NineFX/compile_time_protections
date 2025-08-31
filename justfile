@@ -83,8 +83,8 @@ apt-repo:
 
 # Install prerequisites on a Debian Linux distro
 bootstrap:
-    apt-get update
-    apt-get install -y clang-16 clang-tools-16 gdb valgrind curl wget \
+    sudo apt-get update
+    sudo apt-get install -y clang-16 clang-tools-16 gdb valgrind curl wget \
                        gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
                        libc6-dev-armhf-cross libc6-armhf-cross \
                        libstdc++6-armhf-cross libgcc-s1-armhf-cross \
@@ -96,4 +96,7 @@ bootstrap:
 
 ci-build: bootstrap package-rpi
 
-ci-release: ci-build apt-repo
+ci-release: ci-build apt-repo show-current-tag
+
+show-current-tag:
+    git describe --tags --abbrev=0
