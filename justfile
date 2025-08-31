@@ -4,7 +4,7 @@ cpp := "clang++-16"
 cpp_flags := "-D_FORTIFY_SOURCE=3"
 cpp_source := "toy_service.cpp"
 executable := "vulnerable_binary"
-version := `shell git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0-dev"`
+version := `git describe --exact-match --tags 2>/dev/null || echo "0.0.0-dev"`
 
 default:
   @just --list
