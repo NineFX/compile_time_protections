@@ -27,7 +27,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - name: Install curl
+        run: apt-get update && apt-get install -y curl
+      - name: Setup Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
       - name: Install just
         uses: extractions/setup-just@v3
         with:
