@@ -34,16 +34,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: toy_service/target/debian/*.deb
-      - name: Upload Debian packages
-        uses: softprops/action-gh-release@v2
-        with:
-          files: toy_service/target/debian/*.deb
       - name: Upload apt repo
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'apt-repo'
-        env:
-          GH_TOKEN: ${{ secrets.MY_COMPILE_TIME_TOKEN }}
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
