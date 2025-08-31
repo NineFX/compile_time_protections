@@ -4,6 +4,7 @@ cpp := "clang++-16"
 cpp_flags := "-D_FORTIFY_SOURCE=3"
 cpp_source := "toy_service.cpp"
 executable := "vulnerable_binary"
+version := $(shell git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0-dev")
 
 default:
   @just --list
@@ -54,14 +55,14 @@ build-rust-release-rpi:
 [working-directory: 'toy_service']
 package: build-cpp-release
     @echo 'Generating a Debian package'
-    cargo deb
-    dpkg-deb -c target/debian/toy-service_0.1.0-1_arm64.deb
+    cargo deb --strip --deb-version {{version}}
+    dpkg-deb -c target/debian/toy-service_{{version}}-1_arm64.deb
 
 [working-directory: 'toy_service/target/debian']
 install_package: package
     @echo 'Generating a Debian package'
     sudo apt-get remove toy-service || true
-    sudo apt-get install -y -f ./toy-service_0.1.0-1_arm64.deb
+    sudo apt-get install -y -f ./toy-service_{{version}}-1_arm64.deb
 
 [working-directory: 'toy_service']
 package-rpi: build-cpp-release-rpi
@@ -74,6 +75,12 @@ clean: clean-rust
 clean-rust:
     cargo clean
 
+[working-directory: 'toy_service']
+apt-repo:
+    aptly repo create -config=.aptly.conf -distribution=stable -component=main compile_time_protections
+    aptly repo add -config=.aptly.conf compile_time_protections toy_service/target/debian/*.deb
+    aptly publish repo -config=.aptly.conf --skip-signing compile_time_protections
+
 # Install prerequisites on a Debian Linux distro
 bootstrap:
     sudo apt-get update
@@ -81,8 +88,11 @@ bootstrap:
                             gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
                             libc6-dev-armhf-cross libc6-armhf-cross \
                             libstdc++6-armhf-cross libgcc-s1-armhf-cross \
-                            libc++1-16 libc++abi1-16 libclang-rt-16-dev libstdc++6
+                            libc++1-16 libc++abi1-16 libclang-rt-16-dev libstdc++6 \
+                            checksec aptly
     cargo install cargo-deb
     rustup target add {{rust_rpi_target}}
 
-ci: bootstrap package-rpi
+ci-build: bootstrap package-rpi
+
+ci-release: ci-build ci-release
