@@ -28,7 +28,6 @@ build-cpp-release-rpi:
             -fuse-ld=gold \
             -fsanitize=undefined \
             -fsanitize-minimal-runtime \
-            -fsanitize=safe-stack  \
             -fno-sanitize-trap=all \
             -fstack-protector-strong \
             -D_FORTIFY_SOURCE=3 \
