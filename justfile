@@ -4,7 +4,7 @@ cpp := "clang++-16"
 cpp_flags := "-D_FORTIFY_SOURCE=3"
 cpp_source := "toy_service.cpp"
 executable := "vulnerable_binary"
-version := `echo "${GITHUB_REF_NAME}" || echo "0.0.0-dev"`
+version := env_var_or_default("GITHUB_REF_NAME", "0.0.0-dev")
 
 default:
   @just --list
@@ -95,4 +95,4 @@ bootstrap:
 
 ci-build: bootstrap build-cpp-release-rpi build-rust-release-rpi
 
-ci-release: build-cpp-release-rpi package-rpi apt-repo
+ci-release: ci-build package-rpi apt-repo
