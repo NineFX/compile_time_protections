@@ -8,8 +8,8 @@ use std::{thread, time};
 #[derive(Debug)]
 enum VulnerableBinaryCall {
     Normal,
-    BadCast,
-    UseAfterFree,
+    //BadCast,
+    //UseAfterFree,
     IntegerOverflow,
     StrcpyOutOfBound,
 }
@@ -29,8 +29,8 @@ fn main() {
     let mut rng = rand::rng();
     let call_types = vec![
         VulnerableBinaryCall::Normal,
-        VulnerableBinaryCall::BadCast,
-        VulnerableBinaryCall::UseAfterFree,
+        //VulnerableBinaryCall::BadCast,
+        //VulnerableBinaryCall::UseAfterFree,
         VulnerableBinaryCall::IntegerOverflow,
         VulnerableBinaryCall::StrcpyOutOfBound,
     ];
@@ -49,9 +49,9 @@ fn call_binary(
 ) {
     let call = match call {
         VulnerableBinaryCall::IntegerOverflow => Some("integer_overflow"),
-        VulnerableBinaryCall::BadCast => Some("bad_cast"),
+        //VulnerableBinaryCall::BadCast => Some("bad_cast"),
         VulnerableBinaryCall::Normal => None,
-        VulnerableBinaryCall::UseAfterFree => Some("use_after_free"),
+        //VulnerableBinaryCall::UseAfterFree => Some("use_after_free"),
         VulnerableBinaryCall::StrcpyOutOfBound => Some("strcpy_out_of_bounds"),
     };
     let output = command(path.to_string(), call).unwrap();
