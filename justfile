@@ -95,4 +95,4 @@ bootstrap:
 
 ci-build: bootstrap build-cpp-release-rpi build-rust-release-rpi
 
-ci-release: ci-build apt-repo
+ci-release: build-cpp-release-rpi package-rpi apt-repo
