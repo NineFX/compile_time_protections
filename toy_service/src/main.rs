@@ -55,7 +55,7 @@ fn call_binary(
         VulnerableBinaryCall::StrcpyOutOfBound => Some("strcpy_out_of_bounds"),
     };
     let output = command(path.to_string(), call).unwrap();
-    if output.status.success() {
+    if output.stderr.is_empty() {
         success_file.write(&output.stdout).unwrap();
     } else {
         log_file.write(&output.stderr).unwrap();
